@@ -52,7 +52,7 @@ void	*philo_routine_maxmeals(void *me)
 		if (!philo_routine_sleep(me))
 			return (NULL);
 	}
-	set_last_meal(me, -1);
+	set_last_meal_off(me);
 	return (NULL);
 }
 

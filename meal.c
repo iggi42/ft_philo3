@@ -30,6 +30,14 @@ bool	set_last_meal(t_philo *p)
 	return (!pthread_mutex_unlock(&p->last_meal_mutex));
 }
 
+bool	set_last_meal_off(t_philo *p)
+{
+	if (p == NULL || pthread_mutex_lock(&p->last_meal_mutex))
+		return (false);
+	p->last_meal = -1;
+	return (!pthread_mutex_unlock(&p->last_meal_mutex));
+}
+
 // returns the time since the last meal was registred, or -1 if thread is happy.
 t_timespan	read_philo_state(t_philo *p)
 {
