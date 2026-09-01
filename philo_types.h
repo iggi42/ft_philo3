@@ -13,7 +13,6 @@
 #ifndef PHILO_TYPES_H
 # define PHILO_TYPES_H
 # include "time.h"
-# include <stdbool.h>
 # include <pthread.h>
 # include <stddef.h>
 

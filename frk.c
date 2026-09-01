@@ -10,16 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "frk.h"
-#include <pthread.h>
-#include <stdbool.h>
-#include <stdio.h>
 
 // taken is true if the fork is in use
 bool	frk_init(t_frk *frk, unsigned char id)
 {
 	if (!frk)
 		return (false);
-	frk->id = id + 5;
+	frk->id = id;
 	frk->taken = false;
 	if (pthread_mutex_init(&frk->taken_mtx, NULL) == 0)
 		return true;

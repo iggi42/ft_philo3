@@ -26,7 +26,7 @@ static long	timer(int op)
 
 	if (gettimeofday(&tv, NULL))
 		return (-1);
-	now = (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	now = (tv.tv_sec * 1000 + (tv.tv_usec + 500) / 1000);
 	if (op == 0)
 		return (start = now, start);
 	else if (op == 1)
@@ -54,7 +54,7 @@ long	get_time_ms(void)
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000L + tv.tv_usec / 1000L);
+	return (tv.tv_sec * 1000L + (500 + tv.tv_usec) / 1000L);
 }
 
 bool	philo_sleep(long duration_ms)
@@ -68,14 +68,14 @@ bool	philo_sleep(long duration_ms)
 		elapsed = get_time_ms() - start;
 		if (elapsed >= duration_ms)
 			break ;
-		if (log_queue(log_bs, NULL))
-			return (false);
 		if (duration_ms - elapsed > 10)
 			usleep(1000);
 		else
 			usleep(100);
+		if (!log_queue(log_bs, NULL))
+			return (false);
 	}
-	return (true);
+	return (log_queue(log_bs, NULL));
 }
 
 /*

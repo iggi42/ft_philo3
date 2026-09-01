@@ -21,6 +21,8 @@ bool	set_last_meal2now(t_philo *p)
 
 	if (p == NULL || pthread_mutex_lock(&p->last_meal_mutex))
 		return (false);
+	if ((read_timer() - p->last_meal) >= p->c->t2die)
+		p->last_meal = (log_queue(log_died, p), -1);
 	result = p->last_meal != -1;
 	if (result)
 		p->last_meal = read_timer();
@@ -41,6 +43,8 @@ bool	is_last_meal2on(t_philo *p)
 
 	if (p == NULL || pthread_mutex_lock(&p->last_meal_mutex))
 		return (false);
+	if ( (read_timer() - p->last_meal) >= p->c->t2die)
+		p->last_meal = (log_queue(log_died, p), -1);
 	result = p->last_meal == -1;
 	if (!pthread_mutex_unlock(&p->last_meal_mutex))
 		return (false);
@@ -57,9 +61,9 @@ t_timespan	read_philo_state(t_philo *p)
 	if (p->last_meal < 0)
 		result = -1;
 	else
-		result = ((read_timer() - p->last_meal));
-	if (result >= p->c->t2die && log_queue(log_died, p))
-		p->last_meal = -1;
+		result = read_timer() - p->last_meal;
+	if (result >= p->c->t2die)
+		p->last_meal = (log_queue(log_died, p), -1);
 	if (pthread_mutex_unlock(&p->last_meal_mutex))
 		return (-1);
 	return (result);

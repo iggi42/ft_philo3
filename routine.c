@@ -12,6 +12,7 @@
 #include "logging.h"
 #include "routine.h"
 #include "meal.h"
+#include "time.h"
 #include <unistd.h>
 
 // returns true if it has slept the full time
@@ -20,24 +21,28 @@
 // thinking log afterwards)
 static bool	philo_routine_sleep(t_philo *thinker)
 {
+	bool result;
 	if (!log_queue(log_sleeping, thinker))
 		return (false);
 	philo_sleep(thinker->c->t2nap);
-	return (log_queue(log_thinking, thinker));
+	result = log_queue(log_thinking, thinker);
+	if(thinker->c->n_phil % 2 == 1)
+		philo_sleep((thinker->c->t2die - thinker->c->t2eat - thinker->c->t2nap) / 2 );
+	return (result);
 }
 
-void	*philo_routine_maxmeals(void *s)
+void	*philo_routine_maxmeals(void *me)
 {
-	t_philo	*me;
 	int		meals;
 
-	me = s;
 	meals = 0;
+	if(((t_philo *) me)->id % 2 == 1)
+		philo_sleep( ((t_philo *) me)->c->t2eat / 2);
 	while (true)
 	{
 		if (!philo_routine_eating(me))
 			return (NULL);
-		if (++meals >= me->c->max_meals)
+		if (++meals >= ((t_philo *) me)->c->max_meals)
 			break ;
 		if (!philo_routine_sleep(me))
 			return (NULL);
@@ -51,6 +56,8 @@ void	*philo_routine_endless(void *s)
 	t_philo	*me;
 
 	me = s;
+	if(((t_philo *) me)->id % 2 == 1)
+		philo_sleep( ((t_philo *) me)->c->t2eat / 2);
 	while (true)
 	{
 		if (!philo_routine_eating(me))

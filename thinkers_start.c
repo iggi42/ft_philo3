@@ -15,6 +15,7 @@
 #include "thinkers.h"
 #include "routine.h"
 #include <unistd.h>
+#include <stdlib.h>
 
 static pthread_t	*start_threats(t_philo_conf *c, t_philo *philo,
 		void *(*routine)(void *))
@@ -34,9 +35,8 @@ static pthread_t	*start_threats(t_philo_conf *c, t_philo *philo,
 		{
 			log_queue(log_close_queue, &philo[i]);
 			wait4thinkers(thread_ids, i);
-			return (NULL);
+			return (free(thread_ids), NULL);
 		}
-		usleep(100);
 		i++;
 	}
 	return (thread_ids);

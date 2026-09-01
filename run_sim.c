@@ -30,7 +30,7 @@ static void	find_starved(t_philo_conf *c, t_philo *philo)
 	}
 	i = 0;
 	clean = true;
-	while (i < c->n_phil)
+	while (true)
 	{
 		t = read_philo_state(&philo[i]);
 		if (t >= c->t2die)
