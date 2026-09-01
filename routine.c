@@ -10,9 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "logging.h"
-#include "routine.h"
 #include "meal.h"
-#include "time.h"
+#include "routine.h"
 #include <unistd.h>
 
 // returns true if it has slept the full time
@@ -21,7 +20,7 @@
 // thinking log afterwards)
 static bool	philo_routine_sleep(t_philo *thinker)
 {
-	bool result;
+	bool		result;
 	t_timespan	start_time;
 
 	start_time = read_timer();
@@ -29,25 +28,26 @@ static bool	philo_routine_sleep(t_philo *thinker)
 		return (false);
 	philo_sleep_until(start_time + thinker->c->t2nap);
 	result = log_queue(log_thinking, thinker);
-	if(thinker->c->n_phil % 2 == 1)
-		philo_sleep_until(read_timer() + ((thinker->c->t2die - thinker->c->t2eat - thinker->c->t2nap) / 2) );
+	if (thinker->c->n_phil % 2 == 1)
+		philo_sleep_until(read_timer() + ((thinker->c->t2die - thinker->c->t2eat
+					- thinker->c->t2nap) / 2));
 	return (result);
 }
 
 void	*philo_routine_maxmeals(void *me)
 {
-	int		meals;
+	int			meals;
 	t_timespan	start_time;
 
 	start_time = read_timer();
 	meals = 0;
-	if(((t_philo *) me)->id % 2 == 1)
-		philo_sleep_until(start_time + ((t_philo *) me)->c->t2eat / 2);
+	if (((t_philo *)me)->id % 2 == 1)
+		philo_sleep_until(start_time + ((t_philo *)me)->c->t2eat / 2);
 	while (true)
 	{
 		if (!philo_routine_eating(me))
 			return (NULL);
-		if (++meals >= ((t_philo *) me)->c->max_meals)
+		if (++meals >= ((t_philo *)me)->c->max_meals)
 			break ;
 		if (!philo_routine_sleep(me))
 			return (NULL);
@@ -58,13 +58,13 @@ void	*philo_routine_maxmeals(void *me)
 
 void	*philo_routine_endless(void *s)
 {
-	t_philo	*me;
+	t_philo		*me;
 	t_timespan	start_time;
 
 	start_time = read_timer();
 	me = s;
-	if(((t_philo *) me)->id % 2 == 1)
-		philo_sleep_until(start_time + ((t_philo *) me)->c->t2eat / 2);
+	if (((t_philo *)me)->id % 2 == 1)
+		philo_sleep_until(start_time + ((t_philo *)me)->c->t2eat / 2);
 	while (true)
 	{
 		if (!philo_routine_eating(me))

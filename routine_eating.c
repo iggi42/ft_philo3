@@ -13,9 +13,6 @@
 #include "frk.h"
 #include "logging.h"
 #include "meal.h"
-#include "philo_types.h"
-#include "time.h"
-#include <stdbool.h>
 #include <unistd.h>
 
 static void	ft_switch(t_frk **a, t_frk **b)
@@ -33,8 +30,8 @@ static void	ft_switch(t_frk **a, t_frk **b)
 // logging is included as side effect
 bool	philo_routine_eating(t_philo *me)
 {
-	t_frk		*fs[2];
-	bool		has_eaten;
+	t_frk	*fs[2];
+	bool	has_eaten;
 
 	fs[0] = me->left;
 	fs[1] = me->right;
@@ -49,7 +46,8 @@ bool	philo_routine_eating(t_philo *me)
 		{
 			if (!log_queue(log_forklift, me))
 				return (frk_putdown(fs[0]), frk_putdown(fs[1]), false);
-			has_eaten = set_last_meal(me) && philo_sleep_until(read_timer() + me->c->t2eat);
+			has_eaten = set_last_meal(me)
+				&& philo_sleep_until(read_timer() + me->c->t2eat);
 			frk_putdown(fs[1]);
 		}
 		frk_putdown(fs[0]);

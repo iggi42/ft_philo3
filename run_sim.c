@@ -14,8 +14,6 @@
 #include "meal.h"
 #include "philo.h"
 #include "thinkers.h"
-#include "time.h"
-#include <unistd.h>
 
 static void	find_starved(t_philo_conf *c, t_philo *philo)
 {
@@ -42,7 +40,6 @@ static void	find_starved(t_philo_conf *c, t_philo *philo)
 		else if (i + 1 >= c->n_phil)
 			clean = true;
 		i = (i + 1) % c->n_phil;
-		// usleep(50);
 	}
 }
 

@@ -13,8 +13,6 @@
 #ifndef PHILO_H
 # define PHILO_H
 # include "philo_types.h"
-# include <stdbool.h>
-# include <stddef.h>
 
 // run a round of philos eating
 bool	run_sim(t_philo_conf *c);

@@ -14,7 +14,6 @@
 # define PHILO_TYPES_H
 # include "time.h"
 # include <pthread.h>
-# include <stddef.h>
 
 // 0 is not a valid philo id btw
 typedef unsigned char	t_philo_id;

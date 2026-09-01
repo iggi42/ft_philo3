@@ -10,15 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "meal.h"
 #include "logging.h"
-#include "time.h"
+#include "meal.h"
 
 // returns true if it worked as expected
 // returns false if the philo should abort
 bool	set_last_meal(t_philo *p)
 {
-	t_timespan now;
+	t_timespan	now;
 
 	if (p == NULL || pthread_mutex_lock(&p->last_meal_mutex))
 		return (false);
@@ -26,7 +25,7 @@ bool	set_last_meal(t_philo *p)
 	if ((now - p->last_meal) > p->c->t2die)
 		p->last_meal = (log_queue(log_died, p), -1);
 	if (p->last_meal != -1)
-		p->last_meal = (log_queue(log_eating, p),  now);
+		p->last_meal = (log_queue(log_eating, p), now);
 	return (!pthread_mutex_unlock(&p->last_meal_mutex));
 }
 
