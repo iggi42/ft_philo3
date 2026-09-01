@@ -1,4 +1,4 @@
 *.o
 *.d
-philo
+/philo/philo
 42-philosophers-tester
