@@ -20,10 +20,10 @@ bool	set_last_meal(t_philo *p)
 {
 	t_timespan now;
 
-		if (p == NULL || pthread_mutex_lock(&p->last_meal_mutex))
+	if (p == NULL || pthread_mutex_lock(&p->last_meal_mutex))
 		return (false);
 	now = read_timer();
-	if ((now - p->last_meal) >= p->c->t2die)
+	if ((now - p->last_meal) > p->c->t2die)
 		p->last_meal = (log_queue(log_died, p), -1);
 	if (p->last_meal != -1)
 		p->last_meal = (log_queue(log_eating, p),  now);

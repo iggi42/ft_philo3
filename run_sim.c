@@ -42,7 +42,7 @@ static void	find_starved(t_philo_conf *c, t_philo *philo)
 		else if (i + 1 >= c->n_phil)
 			clean = true;
 		i = (i + 1) % c->n_phil;
-		usleep(50);
+		// usleep(50);
 	}
 }
 
