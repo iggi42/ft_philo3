@@ -19,6 +19,7 @@ typedef long	t_timespan;
 
 void			start_timer(void);
 t_timespan		read_timer(void);
-bool			philo_sleep(long wait_me);
+// bool			philo_sleep(long wait_me);
+bool			philo_sleep_until(t_timespan target);
 
 #endif

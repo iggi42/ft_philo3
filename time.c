@@ -56,6 +56,27 @@ long	get_time_ms(void)
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000L + (500 + tv.tv_usec) / 1000L);
 }
+#include <stdio.h>
+
+bool	philo_sleep_until(t_timespan target)
+{
+	t_timespan	now;
+
+	while (42)
+	{
+		now = read_timer();
+		// printf("now is %ld wating till %ld \n", now, target);
+		if (now >= target)
+			break ;
+		if (now + 10 > target)
+			usleep(1000);
+		else
+			usleep(100);
+		if (!log_queue(log_bs, NULL))
+			return (false);
+	}
+	return (log_queue(log_bs, NULL));
+}
 
 bool	philo_sleep(long duration_ms)
 {
@@ -63,7 +84,7 @@ bool	philo_sleep(long duration_ms)
 	long	elapsed;
 
 	start = get_time_ms();
-	while (1)
+	while (42)
 	{
 		elapsed = get_time_ms() - start;
 		if (elapsed >= duration_ms)
@@ -77,19 +98,3 @@ bool	philo_sleep(long duration_ms)
 	}
 	return (log_queue(log_bs, NULL));
 }
-
-/*
-bool	philo_sleep(long wait_me)
-{
-	t_timespan	end;
-
-	end = read_timer() + wait_me;
-	while (read_timer() <= end)
-	{
-		if (!log_queue(log_bs, NULL))
-			return (false);
-		usleep(100);
-	}
-	return (true);
-}
-*/

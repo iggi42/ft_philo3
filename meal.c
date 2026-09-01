@@ -12,43 +12,22 @@
 
 #include "meal.h"
 #include "logging.h"
+#include "time.h"
 
 // returns true if it worked as expected
 // returns false if the philo should abort
-bool	set_last_meal2now(t_philo *p)
+bool	set_last_meal(t_philo *p)
 {
-	bool	result;
+	t_timespan now;
 
-	if (p == NULL || pthread_mutex_lock(&p->last_meal_mutex))
+		if (p == NULL || pthread_mutex_lock(&p->last_meal_mutex))
 		return (false);
-	if ((read_timer() - p->last_meal) >= p->c->t2die)
+	now = read_timer();
+	if ((now - p->last_meal) >= p->c->t2die)
 		p->last_meal = (log_queue(log_died, p), -1);
-	result = p->last_meal != -1;
-	if (result)
-		p->last_meal = read_timer();
+	if (p->last_meal != -1)
+		p->last_meal = (log_queue(log_eating, p),  now);
 	return (!pthread_mutex_unlock(&p->last_meal_mutex));
-}
-
-bool	set_last_meal2off(t_philo *p)
-{
-	if (p == NULL || pthread_mutex_lock(&p->last_meal_mutex))
-		return (false);
-	p->last_meal = -1;
-	return (!pthread_mutex_unlock(&p->last_meal_mutex));
-}
-
-bool	is_last_meal2on(t_philo *p)
-{
-	bool	result;
-
-	if (p == NULL || pthread_mutex_lock(&p->last_meal_mutex))
-		return (false);
-	if ( (read_timer() - p->last_meal) >= p->c->t2die)
-		p->last_meal = (log_queue(log_died, p), -1);
-	result = p->last_meal == -1;
-	if (!pthread_mutex_unlock(&p->last_meal_mutex))
-		return (false);
-	return (result);
 }
 
 // returns the time since the last meal was registred, or -1 if thread is happy.

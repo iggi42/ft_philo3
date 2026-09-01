@@ -22,22 +22,27 @@
 static bool	philo_routine_sleep(t_philo *thinker)
 {
 	bool result;
+	t_timespan	start_time;
+
+	start_time = read_timer();
 	if (!log_queue(log_sleeping, thinker))
 		return (false);
-	philo_sleep(thinker->c->t2nap);
+	philo_sleep_until(start_time + thinker->c->t2nap);
 	result = log_queue(log_thinking, thinker);
 	if(thinker->c->n_phil % 2 == 1)
-		philo_sleep((thinker->c->t2die - thinker->c->t2eat - thinker->c->t2nap) / 2 );
+		philo_sleep_until(read_timer() + ((thinker->c->t2die - thinker->c->t2eat - thinker->c->t2nap) / 2) );
 	return (result);
 }
 
 void	*philo_routine_maxmeals(void *me)
 {
 	int		meals;
+	t_timespan	start_time;
 
+	start_time = read_timer();
 	meals = 0;
 	if(((t_philo *) me)->id % 2 == 1)
-		philo_sleep( ((t_philo *) me)->c->t2eat / 2);
+		philo_sleep_until(start_time + ((t_philo *) me)->c->t2eat / 2);
 	while (true)
 	{
 		if (!philo_routine_eating(me))
@@ -47,17 +52,19 @@ void	*philo_routine_maxmeals(void *me)
 		if (!philo_routine_sleep(me))
 			return (NULL);
 	}
-	set_last_meal2off(me);
+	set_last_meal(me, -1);
 	return (NULL);
 }
 
 void	*philo_routine_endless(void *s)
 {
 	t_philo	*me;
+	t_timespan	start_time;
 
+	start_time = read_timer();
 	me = s;
 	if(((t_philo *) me)->id % 2 == 1)
-		philo_sleep( ((t_philo *) me)->c->t2eat / 2);
+		philo_sleep_until(start_time + ((t_philo *) me)->c->t2eat / 2);
 	while (true)
 	{
 		if (!philo_routine_eating(me))
