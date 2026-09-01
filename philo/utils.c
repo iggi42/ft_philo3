@@ -22,7 +22,7 @@ void	*ft_calloc(size_t n_el, size_t el_size)
 		return (NULL);
 	el_size *= n_el;
 	result = malloc(el_size);
-	if(result != NULL)
+	if (result != NULL)
 		memset(result, 0, el_size);
 	return (result);
 }
