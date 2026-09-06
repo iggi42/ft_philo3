@@ -3,6 +3,8 @@
 # Description
 Simulate the dinining philosphers problem to demonstrate an understanding of threading and mutexes, and you know advance in the 42 CC.
 
+This README assumes you have read the subject.pdf.
+
 ## Data structures.
 
 Each fork has a bool value as state indicating whether it is taken up.
@@ -15,6 +17,7 @@ This is because the main thread checks this time of all philos to detected if th
 
 The logging is also protected by mutex so only one log function is executed at a time.
 This mechanism was extended to stop printing after a philosphor has died and to function as a killswitch for every philo thread to abort end early.
+
 
 # Instructions
 Run `make` to build the `./philo` program.
