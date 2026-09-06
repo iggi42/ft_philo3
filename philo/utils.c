@@ -35,13 +35,18 @@ bool	ft_isdigit(int c)
 // check if input is valid
 bool	ft_aisi(char *input)
 {
+	size_t	len;
+
 	if (input == NULL || *input == '\0')
 		return (false);
-	while (*input)
+	len = 0;
+	while (input[len])
 	{
-		if (!ft_isdigit(*input))
+		if (!ft_isdigit(input[len]))
 			return (false);
-		input++;
+		len++;
+		if (len > 11)
+			return (false);
 	}
 	return (true);
 }
