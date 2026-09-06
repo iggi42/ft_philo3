@@ -6,14 +6,16 @@
 #    By: fkruger <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/13 01:51:41 by fkruger           #+#    #+#              #
-#    Updated: 2026/09/01 21:25:18 by fkruger          ###   ########.fr        #
+#    Updated: 2026/09/06 16:22:54 by fkruger          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = philo
 CC = cc
-CFLAGS += -MD -Wall -Wextra -Werror -O1
+CFLAGS += -MD -Wall -Wextra -Werror
+
 # CFLAGS += -g -O1 -fsanitize=thread
-CFLAGS += -g
+# CFLAGS += -g
+# CFLAGS += -O3
 
 # utils functions
 SRCS += utils.c ph_main.c time.c philo_sleep.c

@@ -25,10 +25,10 @@ bool	philo_sleep_until(t_timespan target)
 	while (42)
 	{
 		now = read_timer();
-		if (now >= target)
+		if (now > target)
 			break ;
 		if (now + 10 > target)
-			usleep(1000);
+			usleep(700);
 		else
 			usleep(100);
 		if (!log_queue(log_bs, NULL))
