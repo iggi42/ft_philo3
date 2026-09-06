@@ -21,7 +21,7 @@ This mechanism was extended to stop printing after a philosphor has died and to 
 
 ## Fork and waiting strategy for each philosphor
 The philosphers with an uneven id take the right fork first, the others take the left fork first.
-These also think after for `("time to die" - "time to eat" - "time to sleep") / 2` after eating, this ensures that their neighbours who might be about to starve to grab a fork.
+If the total number of philosphers is uneven then each philospher waits `("time to die" - "time to eat" - "time to sleep") / 2` after eating, this ensures that their neighbours who might be about to starve to grab a fork.
 When starting the simulation these uneven ones also wait for `"time to eat" / 2` this gives every philospher a time slots.
 This gives the even philospher a time slot to operate in and the uneven ones get their own timeslot.
 Each philospher hopes to stay in their timeslot and never get into conflict with their neighbours this way.
@@ -32,6 +32,7 @@ Run `make` to build the `./philo` program.
 Run `./philo ${number_of_philosophers} ${time_to_die} ${time_to_eat} ${time_to_sleep}` to start an endless session of philosphers eating, sleeping and thinking.
 Each `time_to_*` argument is expected to be a whole positive number represeting millisecounds.
 The maximum supported amount philophers in a simulation is 200.
+The maximum value for a time parameter is 9999999999.
 
 Alternatively you can add one more (positive) integer that represents the number of times each philospher has to eat at least to end the simulation (the happy ending).
 
